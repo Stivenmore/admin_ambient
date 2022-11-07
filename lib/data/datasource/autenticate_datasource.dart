@@ -7,7 +7,7 @@ class AutenticationDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final prefs = UserPreferences();
-  late UserModel userModel;
+  UserModel? userModel;
   String get userUid => _firebaseAuth.currentUser!.uid;
 
   bool get isAuth =>

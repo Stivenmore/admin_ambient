@@ -11,7 +11,7 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
       : _autenticationServices = autenticationServices,
         super(SignInAndUpInitial());
 
-  UserModel get usermodelCubit => _autenticationServices.userModel;
+  UserModel get usermodelCubit => _autenticationServices.userModel != null? UserModel(nombre: '', email: ''): _autenticationServices.userModel!;
 
   Future signUpMethod(
       {required String name,
@@ -22,7 +22,7 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
       Map? isSuccess = await _autenticationServices.register(
           email: email, password: password, fullname: name);
       if (isSuccess["bool"]) {
-        emit(SignInAndUpLoaded(user: _autenticationServices.userModel));
+        emit(SignInAndUpLoaded(user: usermodelCubit));
       } else {
         emit(SignInAndUpError(message: isSuccess["message"]));
       }
@@ -37,7 +37,7 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
       Map? isSuccess =
           await _autenticationServices.login(email: email, password: password);
       if (isSuccess["bool"]) {
-        emit(SignInAndUpLoaded(user: _autenticationServices.userModel));
+        emit(SignInAndUpLoaded(user: usermodelCubit));
       } else {
         emit(SignInAndUpError(message: isSuccess["message"]));
       }
