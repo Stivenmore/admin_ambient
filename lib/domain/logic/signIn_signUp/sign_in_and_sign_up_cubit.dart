@@ -42,7 +42,7 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
         emit(SignInAndUpError(message: isSuccess["message"]));
       }
     } catch (e) {
-      emit(SignInAndUpError(message: e.toString()));
+      emit(const SignInAndUpError(message: 'Error'));
     }
   }
 
