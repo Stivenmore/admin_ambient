@@ -11,7 +11,10 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
       : _autenticationServices = autenticationServices,
         super(SignInAndUpInitial());
 
-  UserModel get usermodelCubit => _autenticationServices.userModel == null? UserModel(nombre: '', email: ''): _autenticationServices.userModel!;
+  UserModel get usermodelCubit => _autenticationServices.userModel == null
+      ? UserModel(nombre: '', email: '')
+      : _autenticationServices.userModel!;
+  bool get isloadingGetuser => _autenticationServices.isLoadingGetUser;
 
   Future signUpMethod(
       {required String name,

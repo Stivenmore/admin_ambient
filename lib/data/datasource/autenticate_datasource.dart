@@ -9,6 +9,7 @@ class AutenticationDataSource {
   final prefs = UserPreferences();
   UserModel? userModel;
   String get userUid => _firebaseAuth.currentUser!.uid;
+  bool isLoadingGetUser = false;
 
   bool get isAuth =>
       _firebaseAuth.currentUser != null &&
@@ -23,7 +24,7 @@ class AutenticationDataSource {
         final usercloud =
             await _firestore.collection('Manager').doc(user.user!.uid).get();
         if (usercloud.exists) {
-        prefs.token = usercloud.id;
+          prefs.token = usercloud.id;
           userModel = UserModel.fromFirebase(usercloud.data()!);
           return {"bool": true, "message": ""};
         } else {
@@ -42,6 +43,7 @@ class AutenticationDataSource {
       required String password,
       required String fullname}) async {
     try {
+      isLoadingGetUser = true;
       final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (credentials.user!.uid != '') {
@@ -50,16 +52,19 @@ class AutenticationDataSource {
           'name': fullname,
           'password': password,
         });
-       prefs.token = credentials.user!.uid;
+        prefs.token = credentials.user!.uid;
         userModel = UserModel.fromFirebase({
           "name": fullname,
           "email": email,
         });
+        isLoadingGetUser = false;
         return {"bool": true, "message": ""};
       } else {
+        isLoadingGetUser = false;
         return {"bool": false, "message": "Usuario no encontrado"};
       }
     } catch (e) {
+      isLoadingGetUser = false;
       throw Exception(e);
     }
   }
@@ -77,9 +82,7 @@ class AutenticationDataSource {
     try {
       await _firebaseAuth.signOut();
       prefs.token = "";
-      userModel = UserModel(
-          nombre: "",
-          email: "");
+      userModel = UserModel(nombre: "", email: "");
       return true;
     } catch (e) {
       throw Exception(e);
