@@ -1,6 +1,8 @@
 import 'package:admin_ambient/data/datasource/analytics_datasource.dart';
 import 'package:admin_ambient/data/datasource/autenticate_datasource.dart';
+import 'package:admin_ambient/data/datasource/search_datasource.dart';
 import 'package:admin_ambient/domain/logic/analytics/analytics_cubit.dart';
+import 'package:admin_ambient/domain/logic/search/search_cubit.dart';
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
 import 'package:admin_ambient/domain/logic/splash/splash_cubit.dart';
 import 'package:admin_ambient/domain/services/prefs_services.dart';
@@ -34,11 +36,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final autenticationDataSource = AutenticationDataSource();
     final analyticsDataSource = AnalyticsDataSource();
+    final searchDatasource = SearchDatasource();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => SignInAndUpCubit(autenticationDataSource)),
         BlocProvider(create: (_) => SplashCubit(autenticationDataSource)),
-        BlocProvider(create: (_) => AnalyticsCubit(analyticsDataSource))
+        BlocProvider(create: (_) => AnalyticsCubit(analyticsDataSource)),
+        BlocProvider(create: (_) => SearchCubit(searchDatasource)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

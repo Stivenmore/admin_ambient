@@ -66,8 +66,8 @@ class _PerformanceState extends State<Performance> {
             decoration: BoxDecoration(
                 color: UniCodes.blueperformance,
                 borderRadius: BorderRadius.circular(28)),
-            height: 380,
-            width: 300,
+            height: 410,
+            width: 280,
             child: AnalyticSuccessBody(
               model: widget.model,
               avaibleNote: widget.avaibleNote,

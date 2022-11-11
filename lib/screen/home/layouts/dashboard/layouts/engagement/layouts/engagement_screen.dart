@@ -55,7 +55,7 @@ class _EngagementScreenState extends State<EngagementScreen> {
                 SizedBox(
                   width: 150,
                   child: Text(
-                    "Estadisticas generales establecida actualmente",
+                    "Estadisticas generales de registro de usuarios",
                     style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500)),
@@ -114,7 +114,7 @@ class _EngagementScreenState extends State<EngagementScreen> {
         type: " Este Mes",
       );
     } else if (analyticsCubit.state.enumMonth ==
-        AnalyticsStateEnumDay.loading) {
+        AnalyticsStateEnumMonth.loading) {
       return Shimmer.fromColors(
         baseColor: Colors.grey.shade400,
         highlightColor: Colors.grey.shade100,
@@ -140,7 +140,7 @@ class _EngagementScreenState extends State<EngagementScreen> {
         type: " Este Año",
       );
     } else if (analyticsCubit.state.enumYears ==
-        AnalyticsStateEnumDay.loading) {
+        AnalyticsStateEnumYears.loading) {
       return Shimmer.fromColors(
         baseColor: Colors.grey.shade400,
         highlightColor: Colors.grey.shade100,

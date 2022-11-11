@@ -16,6 +16,22 @@ imageCalculateWidthHome(Responsive responsive) {
   if (responsive.width <= 600) return DisplayType.mobile;
 }
 
+imageCalculateWidthSearch(Responsive responsive) {
+  if (imageCalculateWidthHome(responsive) == DisplayType.web) {
+    return responsive.wp(43);
+  } else if (imageCalculateWidthHome(responsive) == DisplayType.table) {
+    if (responsive.width <= 830 && responsive.width > 774) {
+      return 300;
+    }
+    if (responsive.width <= 771) {
+      return 0;
+    }
+    return responsive.wp(65) - responsive.st(25);
+  } else {
+    return 0;
+  }
+}
+
 paddingCalculateWidth(Responsive responsive) {
   if (responsive.isTablet) return responsive.wp(5);
   if (responsive.isWeb) return responsive.wp(10);
