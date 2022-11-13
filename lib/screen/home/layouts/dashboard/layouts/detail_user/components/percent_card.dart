@@ -14,55 +14,58 @@ class PercenCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 70,
-          child: Text(
-            label,
-            style: GoogleFonts.roboto(
-                textStyle: TextStyle(
-              color: UniCodes.blueperformance,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-            )),
+    return SingleChildScrollView(
+      child: Row(
+        children: [
+          SizedBox(
+            width: 70,
+            child: Text(
+              label,
+              style: GoogleFonts.roboto(
+                  textStyle: TextStyle(
+                color: UniCodes.blueperformance,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              )),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 180,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                width: 8,
+          Container(
+            width: 180,
+            child: SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                    width: 100,
+                    child: PercentIndicator(
+                      color: value / 10 == 1 || value > 10
+                          ? UniCodes.orangeperformance2
+                          : UniCodes.cielperformance,
+                      percent: value > 10 ? 10 : value / 10,
+                      fromLeft: false,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    " $value Kl",
+                    style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                      color: UniCodes.gray3,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    )),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 100,
-                child: PercentIndicator(
-                  color: value / 10 == 1 || value > 10
-                      ? UniCodes.orangeperformance2
-                      : UniCodes.cielperformance,
-                  percent: value > 10 ? 10 : value / 10,
-                  fromLeft: false,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                " $value Kl",
-                style: GoogleFonts.roboto(
-                    textStyle: TextStyle(
-                  color: UniCodes.gray3,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                )),
-              ),
-            ],
-          ),
-        )
-      ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
-

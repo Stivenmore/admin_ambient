@@ -41,6 +41,10 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      InfoCard(user: user, usermodel: usermodel),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,14 +147,13 @@ class _ListRecyclerState extends State<ListRecycler> {
             height: 10,
           ),
           SizedBox(
-            width: 300,
+            width: responsive.width > 500 ? 300 : 250,
             height: responsive.height,
             child: SingleChildScrollView(
               child: ExpansionPanelList(
                   animationDuration: const Duration(milliseconds: 500),
                   dividerColor: UniCodes.cielperformance,
                   elevation: 1,
-                  expandedHeaderPadding: const EdgeInsets.all(20),
                   expansionCallback: (int index, bool isExpanded) {
                     setState(() {
                       widget.usermodel.recycler[index].isExpanded = !isExpanded;
@@ -169,44 +172,48 @@ class _ListRecyclerState extends State<ListRecycler> {
                         },
                         body: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              PercenCard(
-                                label: "Plastico",
-                                value: recyclerModel.plastico,
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              PercenCard(
-                                label: "Metal",
-                                value: recyclerModel.metal,
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              PercenCard(
-                                label: "Papel",
-                                value: recyclerModel.papel,
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              PercenCard(
-                                label: "Carton",
-                                value: recyclerModel.carton,
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              PercenCard(
-                                label: "Vidrio",
-                                value: recyclerModel.vidrio,
-                              ),
-                            ],
+                          child: SizedBox(
+                            height: 200,
+                            width: 250,
+                            child: ListView(
+                              children: [
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                PercenCard(
+                                  label: "Plastico",
+                                  value: recyclerModel.plastico,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                PercenCard(
+                                  label: "Metal",
+                                  value: recyclerModel.metal,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                PercenCard(
+                                  label: "Papel",
+                                  value: recyclerModel.papel,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                PercenCard(
+                                  label: "Carton",
+                                  value: recyclerModel.carton,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                PercenCard(
+                                  label: "Vidrio",
+                                  value: recyclerModel.vidrio,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         isExpanded: recyclerModel.isExpanded);
