@@ -12,6 +12,7 @@ class UniCodes {
 
   static Color blueperformance = const Color(0xff0f1223);
   static Color orangeperformance = const Color(0xffff4b25);
-  static Color cielperformance = const Color(0xff63d9e1);
+  static Color orangeperformance2 = const Color(0xffeb5c4f);
+  static Color cielperformance = const Color(0xff33ad84);
   static Color whiteperformance = const Color(0xffffffff);
 }

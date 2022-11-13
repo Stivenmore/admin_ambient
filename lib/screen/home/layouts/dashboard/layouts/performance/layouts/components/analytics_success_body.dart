@@ -61,44 +61,29 @@ class AnalyticSuccessBody extends StatelessWidget {
                         color: UniCodes.gray3,
                         fontWeight: FontWeight.w100)),
               ),
-              model.isNotEmpty
-                  ? const PerformancePorcent(
-                      large: "Funcionando", subtitle: "Estado")
-                  : const PerformancePorcent(large: "  ", subtitle: "  "),
+              const PerformancePorcent(large: "Funcionando", subtitle: "Estado")
             ],
           ),
           const SizedBox(
             height: 50,
           ),
-          model.isNotEmpty
-              ? PerformanceLabel(
-                  backgrouudIcon: UniCodes.orangeperformance,
-                  avaible: avaiblePodcast,
-                  text: avaiblePodcast
-                      ? "Podcast activos y disponibles"
-                      : "Podcast inactivos en app",
-                )
-              : PerformanceLabel(
-                  backgrouudIcon: UniCodes.orangeperformance,
-                  avaible: false,
-                  text: "",
-                ),
+          PerformanceLabel(
+            backgrouudIcon: UniCodes.orangeperformance,
+            avaible: avaiblePodcast,
+            text: avaiblePodcast
+                ? "Podcast activos y disponibles"
+                : "Podcast inactivos en app",
+          ),
           const SizedBox(
             height: 20,
           ),
-          model.isNotEmpty
-              ? PerformanceLabel(
-                  backgrouudIcon: UniCodes.cielperformance,
-                  avaible: avaibleNote,
-                  text: avaibleNote
-                      ? "Notas activos y disponibles"
-                      : "Notas inactivos en app",
-                )
-              : PerformanceLabel(
-                  backgrouudIcon: UniCodes.cielperformance,
-                  avaible: false,
-                  text: "",
-                ),
+          PerformanceLabel(
+            backgrouudIcon: UniCodes.cielperformance,
+            avaible: avaibleNote,
+            text: avaibleNote
+                ? "Notas activos y disponibles"
+                : "Notas inactivos en app",
+          )
         ],
       ),
     );

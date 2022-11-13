@@ -2,6 +2,7 @@ import 'package:admin_ambient/domain/models/user_model.dart';
 import 'package:admin_ambient/domain/services/prefs_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:admin_ambient/domain/models/user_model.dart' as model;
 
 class AutenticationDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -82,7 +83,11 @@ class AutenticationDataSource {
     try {
       await _firebaseAuth.signOut();
       prefs.token = "";
-      userModel = UserModel(nombre: "", email: "");
+      userModel = UserModel(
+          nombre: "",
+          email: "",
+          transaction: <model.Transaction>[],
+          recycler: <RecyclerModel>[]);
       return true;
     } catch (e) {
       throw Exception(e);

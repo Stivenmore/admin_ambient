@@ -83,15 +83,11 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
               DateFormat("yyyy-MM-dd").format(DateTime.now()));
       List<UserModel> userlist =
           resp.map((e) => UserModel.fromFirebase(e.data())).toList();
-      if (userlist.isNotEmpty) {
-        emit(state.copywith(
-            analyticsUpdateUser: userlist,
-            enumUpdate: AnalyticsStateEnumUpdate.success,
-            avaibleNotes: avaibleNote,
-            avaiblePodcast: avaiblePodcast));
-      } else {
-        emit(state.copywith(enumUpdate: AnalyticsStateEnumUpdate.none));
-      }
+      emit(state.copywith(
+          analyticsUpdateUser: userlist,
+          enumUpdate: AnalyticsStateEnumUpdate.success,
+          avaibleNotes: avaibleNote,
+          avaiblePodcast: avaiblePodcast));
     } catch (e) {
       emit(state.copywith(enumUpdate: AnalyticsStateEnumUpdate.error));
     }

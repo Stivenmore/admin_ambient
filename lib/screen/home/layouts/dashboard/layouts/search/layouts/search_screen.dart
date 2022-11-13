@@ -1,4 +1,6 @@
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/search/search_cubit.dart';
+import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/models/user_model.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/search/components/button_search.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
@@ -20,12 +22,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController controller = TextEditingController();
+  TextEditingController controller =
+      TextEditingController(text: "stiven@gmail.com");
   final borderStyle = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: UniCodes.whiteperformance));
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserCubit>();
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -58,11 +62,9 @@ class _SearchScreenState extends State<SearchScreen> {
               if (widget.responsive.width > 835)
                 InkWell(
                   onTap: () {
-                    if (controller.text.isNotEmpty) {
-                      context
-                          .read<SearchCubit>()
-                          .getQueryUsersSearch(controller.text);
-                    }
+                    context
+                        .read<SearchCubit>()
+                        .getQueryUsersSearch(controller.text);
                   },
                   child: const ButtonSearch(
                     text: " Buscar ",
@@ -76,11 +78,9 @@ class _SearchScreenState extends State<SearchScreen> {
           if (widget.responsive.width < 835)
             InkWell(
               onTap: () {
-                if (controller.text.isNotEmpty) {
-                  context
-                      .read<SearchCubit>()
-                      .getQueryUsersSearch(controller.text);
-                }
+                context
+                    .read<SearchCubit>()
+                    .getQueryUsersSearch(controller.text);
               },
               child: const ButtonSearch(
                 text: " Buscar ",
@@ -105,7 +105,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             return Padding(
                               padding: const EdgeInsets.all(14.0),
                               child: Container(
-                                height: 80,
+                                height: 90,
                                 child: Column(
                                   children: [
                                     Row(
@@ -147,7 +147,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                         ),
                                         if (widget.responsive.width > 835)
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              user.currenlyUser(list[index]);
+                                              context
+                                                  .read<GeneralCubit>()
+                                                  .changePageDashboard(1);
+                                            },
                                             child: const ButtonSearch(
                                               text: " Ver ",
                                             ),
@@ -156,7 +161,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                     if (widget.responsive.width < 835)
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          user.currenlyUser(list[index]);
+                                          context
+                                              .read<GeneralCubit>()
+                                              .changePageDashboard(1);
+                                        },
                                         child: const ButtonSearch(
                                           text: " Ver ",
                                         ),
