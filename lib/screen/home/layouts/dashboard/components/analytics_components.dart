@@ -42,7 +42,7 @@ class AnalyticsComponents extends StatelessWidget {
                   height: 415,
                   width: imageCalculateWidthSearch(responsive),
                   decoration: BoxDecoration(
-                    color: UniCodes.cielperformance,
+                    color: UniCodes.orangeperformance2,
                     borderRadius: BorderRadius.circular(28),
                   ),
                   child: (responsive.width >= 771)

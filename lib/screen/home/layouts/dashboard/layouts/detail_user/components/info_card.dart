@@ -84,7 +84,7 @@ class InfoCardDetailUser extends StatelessWidget {
             width: 80,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: UniCodes.cielperformance),
+                color: UniCodes.orangeperformance2),
             child: Center(
               child: Text(user.state.userModel.lastlogin ?? "",
                   style: GoogleFonts.roboto(

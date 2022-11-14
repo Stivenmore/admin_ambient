@@ -48,6 +48,12 @@ class _SearchScreenState extends State<SearchScreen> {
                       border: borderStyle,
                       enabledBorder: borderStyle,
                       disabledBorder: borderStyle,
+                      labelStyle: GoogleFonts.roboto(
+                          textStyle:
+                              TextStyle(color: UniCodes.whiteperformance)),
+                      hintStyle: GoogleFonts.roboto(
+                          textStyle:
+                              TextStyle(color: UniCodes.whiteperformance)),
                       label: Text(
                         "Buscar por correo",
                         style: GoogleFonts.roboto(

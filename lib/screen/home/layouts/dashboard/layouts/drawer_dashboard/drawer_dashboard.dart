@@ -1,4 +1,5 @@
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
+import 'package:admin_ambient/domain/logic/podcast/podcast_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:admin_ambient/screen/utils/animation/fade_animattion.dart';
@@ -36,6 +37,8 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
     return Builder(builder: (context) {
       final value2 = context.select<GeneralCubit, int>(
           (value2) => value2.state.globalcurrentpage);
+      final statePodcast = context.select<PodcastCubit, PodCastEnum>(
+          (value) => value.state.podCastEnum);
       return FadeAnimation(
         500,
         Padding(
@@ -55,7 +58,7 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
-                          color: UniCodes.coffee,
+                          color: UniCodes.orangeperformance2.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(13)),
                     ),
                     Container(
@@ -131,7 +134,8 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            if (value2 != 0) {
+                            if (value2 != 0 &&
+                                statePodcast != PodCastEnum.loading) {
                               generalcubit.changeGlobalCurrentPage(0);
                             }
                           },
@@ -141,7 +145,7 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: value2 == 0
-                                    ? UniCodes.cielperformance
+                                    ? UniCodes.orangeperformance2
                                     : UniCodes.gray2),
                             textAlign: TextAlign.left,
                           ),
@@ -151,7 +155,8 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                         ),
                         TextButton(
                           onPressed: () {
-                            if (value2 != 1) {
+                            if (value2 != 1 &&
+                                statePodcast != PodCastEnum.loading) {
                               generalcubit.changeGlobalCurrentPage(1);
                             }
                           },
@@ -161,7 +166,28 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: value2 == 1
-                                    ? UniCodes.cielperformance
+                                    ? UniCodes.orangeperformance2
+                                    : UniCodes.gray2),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (value2 != 2 &&
+                                statePodcast != PodCastEnum.loading) {
+                              generalcubit.changeGlobalCurrentPage(2);
+                            }
+                          },
+                          child: Text(
+                            "   | Podcast",
+                            style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: value2 == 2
+                                    ? UniCodes.orangeperformance2
                                     : UniCodes.gray2),
                             textAlign: TextAlign.left,
                           ),

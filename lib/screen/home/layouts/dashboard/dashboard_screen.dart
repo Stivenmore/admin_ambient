@@ -4,6 +4,7 @@ import 'package:admin_ambient/screen/home/layouts/dashboard/components/analytics
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/layouts/detailuser_screen.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/drawer_dashboard/drawer_dashboard.dart';
 import 'package:admin_ambient/screen/home/layouts/notifications/layouts/notificacions_screen.dart';
+import 'package:admin_ambient/screen/home/layouts/podcast/podcast_screen.dart';
 import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
@@ -21,7 +22,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final screens = {0: const AnalyticsComponents(), 1: const DetailUserScreen()};
   final globalScreen = {
     0: const DashBoardScreen(),
-    1: const NotificacionScreen()
+    1: const NotificacionScreen(),
+    2: const PodCastScreen()
   };
 
   @override

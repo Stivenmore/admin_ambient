@@ -34,98 +34,118 @@ class _NotificacionScreenState extends State<NotificacionScreen> {
         switch (state.runtimeType) {
           case NotificacionLoaded:
             List<UserModel> list = state.props[0] as List<UserModel>;
-            return SizedBox(
-              height: responsive.height,
-              width: responsive.width,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 600.0,
-                        mainAxisSpacing: 20.0,
-                        crossAxisSpacing: 20.0,
-                        childAspectRatio: 2.0,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return Row(
-                            children: [
-                              InfoCardNotifier(
-                                  list: list[0], responsive: responsive),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text("Realizado",
-                                      style: GoogleFonts.roboto()),
-                                  InkWell(
-                                    onTap: () {
-                                      notificationCubit.setNotifierHomeUser(
-                                          user: list[index],
-                                          manager: cubit.usermodelCubit,
-                                          reasen: "Realizado",
-                                          listCurrent: list);
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          color: UniCodes.orangeperformance2,
-                                          borderRadius:
-                                              BorderRadius.circular(56)),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.check,
-                                          color: UniCodes.whiteperformance,
-                                          size: 22,
-                                        ),
-                                      ),
+            return list.isNotEmpty
+                ? SizedBox(
+                    height: responsive.height,
+                    width: responsive.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 600.0,
+                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 20.0,
+                              childAspectRatio: 2.0,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return Row(
+                                  children: [
+                                    InfoCardNotifier(
+                                        list: list[0], responsive: responsive),
+                                    const SizedBox(
+                                      width: 5,
                                     ),
-                                  ),
-                                  Text("No Realizado",
-                                      style: GoogleFonts.roboto()),
-                                  InkWell(
-                                    onTap: () {
-                                      notificationCubit.setNotifierHomeUser(
-                                          user: list[index],
-                                          manager: cubit.usermodelCubit,
-                                          reasen: "No Realizado",
-                                          listCurrent: list);
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          color: UniCodes.cielperformance,
-                                          borderRadius:
-                                              BorderRadius.circular(56)),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.close,
-                                          color: UniCodes.whiteperformance,
-                                          size: 22,
+                                    Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 40,
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          );
-                        },
-                        childCount: list.length,
+                                        Text("Realizado",
+                                            style: GoogleFonts.roboto()),
+                                        InkWell(
+                                          onTap: () {
+                                            notificationCubit
+                                                .setNotifierHomeUser(
+                                                    user: list[index],
+                                                    manager:
+                                                        cubit.usermodelCubit,
+                                                    reasen: "Realizado",
+                                                    listCurrent: list);
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    UniCodes.orangeperformance2,
+                                                borderRadius:
+                                                    BorderRadius.circular(56)),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color:
+                                                    UniCodes.whiteperformance,
+                                                size: 22,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text("No Realizado",
+                                            style: GoogleFonts.roboto()),
+                                        InkWell(
+                                          onTap: () {
+                                            notificationCubit
+                                                .setNotifierHomeUser(
+                                                    user: list[index],
+                                                    manager:
+                                                        cubit.usermodelCubit,
+                                                    reasen: "No Realizado",
+                                                    listCurrent: list);
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                                color: UniCodes.cielperformance,
+                                                borderRadius:
+                                                    BorderRadius.circular(56)),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.close,
+                                                color:
+                                                    UniCodes.whiteperformance,
+                                                size: 22,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
+                              childCount: list.length,
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            );
+                    ),
+                  )
+                : SizedBox(
+                    height: responsive.height,
+                    width: responsive.width,
+                    child: Center(
+                      child: Text("Sin notificaciones de recoleccion activas",
+                          style: GoogleFonts.roboto()),
+                    ),
+                  );
           case NotificacionLoading:
             UserModel list = UserModel(
                 nombre: "",
