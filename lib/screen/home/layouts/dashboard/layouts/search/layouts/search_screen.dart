@@ -22,8 +22,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController controller =
-      TextEditingController(text: "stiven@gmail.com");
+  TextEditingController controller = TextEditingController();
   final borderStyle = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: UniCodes.whiteperformance));
