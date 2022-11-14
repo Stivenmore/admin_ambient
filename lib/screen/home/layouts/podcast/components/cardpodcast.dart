@@ -23,6 +23,7 @@ class CardPodCast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Responsive responsive = Responsive(context);
     return Builder(builder: (context) {
       final state = context.select<PodcastCubit, PodLoadingDelete>(
           (value) => value.state.podLoadingDelete);
@@ -34,12 +35,14 @@ class CardPodCast extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               height: 150,
-              width: 500,
+              width: responsive.width < 615 ? 290 : 500,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: UniCodes.orangeperformance2),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(
+                  responsive.width < 615 ? 5 : 20,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -51,8 +54,8 @@ class CardPodCast extends StatelessWidget {
                             placeholder: "assets/Splash.png",
                             image: list.img,
                             fit: BoxFit.cover,
-                            height: 130,
-                            width: 110,
+                            height: responsive.width < 615 ? 80 : 130,
+                            width: responsive.width < 615 ? 80 : 110,
                           ),
                         ),
                         const SizedBox(
@@ -77,7 +80,7 @@ class CardPodCast extends StatelessWidget {
                               style: GoogleFonts.roboto(
                                   color: UniCodes.whiteperformance,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16),
+                                  fontSize: responsive.width < 615 ? 12 : 16),
                             ),
                             const SizedBox(
                               height: 5,
@@ -147,12 +150,14 @@ class CardPodCast extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             height: 150,
-            width: 500,
+            width: responsive.width < 615 ? 290 : 500,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: UniCodes.orangeperformance2),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(
+                responsive.width < 615 ? 5 : 20,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -164,8 +169,8 @@ class CardPodCast extends StatelessWidget {
                           placeholder: "assets/Splash.png",
                           image: list.img,
                           fit: BoxFit.cover,
-                          height: 130,
-                          width: 110,
+                          height: responsive.width < 615 ? 80 : 130,
+                          width: responsive.width < 615 ? 80 : 110,
                         ),
                       ),
                       const SizedBox(
@@ -190,7 +195,7 @@ class CardPodCast extends StatelessWidget {
                             style: GoogleFonts.roboto(
                                 color: UniCodes.whiteperformance,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16),
+                                fontSize: responsive.width < 615 ? 12 : 16),
                           ),
                           const SizedBox(
                             height: 5,
@@ -216,46 +221,35 @@ class CardPodCast extends StatelessWidget {
                       )
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            color: UniCodes.orangeperformance2,
-                            borderRadius: BorderRadius.circular(56)),
-                        child: Center(
-                          child: Icon(
-                            Icons.close,
-                            color: UniCodes.orangeperformance2,
-                            size: 22,
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          context
-                              .read<PodcastCubit>()
-                              .deletePodcast(id, alllist, list);
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: UniCodes.whiteperformance,
-                              borderRadius: BorderRadius.circular(56)),
-                          child: Center(
-                            child: Icon(
-                              Icons.close,
-                              color: UniCodes.orangeperformance2,
-                              size: 22,
+                  responsive.width > 420
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                context
+                                    .read<PodcastCubit>()
+                                    .deletePodcast(id, alllist, list);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: UniCodes.whiteperformance,
+                                    borderRadius: BorderRadius.circular(56)),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.close,
+                                    color: UniCodes.orangeperformance2,
+                                    size: 22,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                          ],
+                        )
+                      : Container()
                 ],
               ),
             ),

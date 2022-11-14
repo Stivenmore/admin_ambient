@@ -97,83 +97,110 @@ class _PodCastScreenState extends State<PodCastScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: responsive.width < 1300
+                        ? CrossAxisAlignment.center
+                        : CrossAxisAlignment.start,
+                    mainAxisAlignment: responsive.width < 1300
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
                     children: [
-                      Builder(builder: (context) {
-                        final list =
-                            context.select<PodcastCubit, List<PodcastModel>>(
-                                (value) => value.state.podcastList);
-                        final enumm =
-                            context.select<PodcastCubit, PodLoadingCast>(
-                                (value) => value.state.podLoadingCast);
-                        switch (enumm) {
-                          case PodLoadingCast.success:
-                            return list.isNotEmpty
-                                ? SizedBox(
+                      if (responsive.width < 1300)
+                        SizedBox(
+                          height: 400,
+                          width: responsive.width < 615 ? 300 : 400,
+                          child: const UploadPodCastCard(),
+                        ),
+                      Row(
+                        crossAxisAlignment: responsive.width < 1300
+                            ? CrossAxisAlignment.center
+                            : CrossAxisAlignment.start,
+                        mainAxisAlignment: responsive.width < 1300
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        children: [
+                          Builder(builder: (context) {
+                            final list = context
+                                .select<PodcastCubit, List<PodcastModel>>(
+                                    (value) => value.state.podcastList);
+                            final enumm =
+                                context.select<PodcastCubit, PodLoadingCast>(
+                                    (value) => value.state.podLoadingCast);
+                            switch (enumm) {
+                              case PodLoadingCast.success:
+                                return list.isNotEmpty
+                                    ? SizedBox(
+                                        height: 800,
+                                        width: responsive.width < 615
+                                            ? responsive.width < 400
+                                                ? 290
+                                                : 320
+                                            : 500,
+                                        child: ListView.builder(
+                                          itemCount: list.length,
+                                          itemBuilder: (context, index) {
+                                            return CardPodCast(
+                                                alllist: list,
+                                                id: list[index].id ??
+                                                    DateTime.now()
+                                                        .microsecondsSinceEpoch
+                                                        .toString(),
+                                                responsive: responsive,
+                                                list: list[index]);
+                                          },
+                                        ))
+                                    : SizedBox(
+                                        height: 300,
+                                        width:
+                                            responsive.width < 615 ? 250 : 500,
+                                        child: Center(
+                                          child: Text("Sin podcasts",
+                                              style: GoogleFonts.roboto()),
+                                        ),
+                                      );
+                              case PodLoadingCast.error:
+                                return Container();
+                              case PodLoadingCast.loading:
+                                return SizedBox(
                                     height: 800,
                                     width: 500,
                                     child: ListView.builder(
-                                      itemCount: list.length,
+                                      itemCount: 4,
                                       itemBuilder: (context, index) {
                                         return CardPodCast(
-                                            alllist: list,
-                                            id: list[index].id ??
-                                                DateTime.now()
-                                                    .microsecondsSinceEpoch
-                                                    .toString(),
-                                            responsive: responsive,
-                                            list: list[index]);
+                                          alllist: const <PodcastModel>[],
+                                          responsive: responsive,
+                                          id: "",
+                                          list: PodcastModel(
+                                              author: "",
+                                              description: "",
+                                              name: "",
+                                              update: "",
+                                              podcast: "",
+                                              type: "",
+                                              img:
+                                                  "https://firebasestorage.googleapis.com/v0/b/ambient-ec3df.appspot.com/o/Img%2Fno-image.jpg?alt=media&token=cc289889-ea88-48a7-86ce-00e0ac3ce197"),
+                                        );
                                       },
-                                    ))
-                                : SizedBox(
-                                    height: 300,
-                                    width: 300,
-                                    child: Center(
-                                      child: Text("Sin podcasts",
-                                          style: GoogleFonts.roboto()),
-                                    ),
-                                  );
-                          case PodLoadingCast.error:
-                            return Container();
-                          case PodLoadingCast.loading:
-                            return SizedBox(
-                                height: 800,
-                                width: 500,
-                                child: ListView.builder(
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return CardPodCast(
-                                      alllist: const <PodcastModel>[],
-                                      responsive: responsive,
-                                      id: "",
-                                      list: PodcastModel(
-                                          author: "",
-                                          description: "",
-                                          name: "",
-                                          update: "",
-                                          podcast: "",
-                                          type: "",
-                                          img:
-                                              "https://firebasestorage.googleapis.com/v0/b/ambient-ec3df.appspot.com/o/Img%2Fno-image.jpg?alt=media&token=cc289889-ea88-48a7-86ce-00e0ac3ce197"),
-                                    );
-                                  },
-                                ));
-                          case PodLoadingCast.none:
-                            return Container();
+                                    ));
+                              case PodLoadingCast.none:
+                                return Container();
 
-                          default:
-                            return Container();
-                        }
-                      }),
-                      const SizedBox(
-                        width: 20,
+                              default:
+                                return Container();
+                            }
+                          }),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          if (responsive.width > 1300)
+                            SizedBox(
+                              height: 400,
+                              width: responsive.width < 615 ? 300 : 400,
+                              child: const UploadPodCastCard(),
+                            )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: UploadPodCastCard(),
-                      )
                     ],
                   ),
                 )
@@ -201,6 +228,7 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = context.read<SignInAndUpCubit>().usermodelCubit;
+    Responsive responsive = Responsive(context);
     return Builder(builder: (context) {
       final state = context.select<PodcastCubit, PodCastEnum>(
           (value) => value.state.podCastEnum);
@@ -245,8 +273,8 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                               color: state == PodCastImg.success
                                   ? UniCodes.orangeperformance2
                                   : UniCodes.gray2.withOpacity(0.5)),
-                          height: 150,
-                          width: 150,
+                          height: responsive.width < 615 ? 70 : 150,
+                          width: responsive.width < 615 ? 70 : 150,
                           child: state == PodCastImg.loading
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -264,7 +292,8 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                                           ? "Imagen Cargada"
                                           : "Cargar Imagen",
                                       style: GoogleFonts.roboto(
-                                          fontSize: 18,
+                                          fontSize:
+                                              responsive.width < 615 ? 12 : 18,
                                           color: UniCodes.whiteperformance),
                                     ),
                                   ),
@@ -290,8 +319,8 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                               color: state == PodCastAudio.success
                                   ? UniCodes.orangeperformance2
                                   : UniCodes.gray2.withOpacity(0.5)),
-                          height: 150,
-                          width: 150,
+                          height: responsive.width < 615 ? 70 : 150,
+                          width: responsive.width < 615 ? 70 : 150,
                           child: state == PodCastAudio.loading
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -309,7 +338,8 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                                           ? "Podcast Cargada"
                                           : "Cargar Podcast",
                                       style: GoogleFonts.roboto(
-                                          fontSize: 18,
+                                          fontSize:
+                                              responsive.width < 615 ? 12 : 18,
                                           color: UniCodes.whiteperformance),
                                     ),
                                   ),
@@ -386,8 +416,9 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                   child: Text(
                     'Agregar',
                     style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                        textStyle: TextStyle(
+                            fontSize: responsive.width < 615 ? 12 : 18,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],
