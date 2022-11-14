@@ -1,3 +1,4 @@
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/splash/splash_cubit.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(Duration.zero, () {
       context.read<SplashCubit>().getUser();
+      context.read<GeneralCubit>().pricepoint();
     });
     super.initState();
   }
@@ -26,10 +28,12 @@ class _SplashScreenState extends State<SplashScreen> {
       listener: (context, state) {
         switch (state.runtimeType) {
           case SplashSuccess:
-            Navigator.pushNamedAndRemoveUntil(context, '/home', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/home', ((route) => false));
             break;
           case SplashError:
-            Navigator.pushNamedAndRemoveUntil(context, '/login', ((route) => false));
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/login', ((route) => false));
             break;
         }
       },

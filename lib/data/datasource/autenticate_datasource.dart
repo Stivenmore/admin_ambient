@@ -26,7 +26,9 @@ class AutenticationDataSource {
             await _firestore.collection('Manager').doc(user.user!.uid).get();
         if (usercloud.exists) {
           prefs.token = usercloud.id;
-          userModel = UserModel.fromFirebase(usercloud.data()!);
+          Map<String, dynamic> map = usercloud.data()!;
+          map.addAll({"id": usercloud.id});
+          userModel = UserModel.fromFirebase(map);
           return {"bool": true, "message": ""};
         } else {
           return {"bool": false, "message": "Usuario no encontrado"};
@@ -84,10 +86,12 @@ class AutenticationDataSource {
       await _firebaseAuth.signOut();
       prefs.token = "";
       userModel = UserModel(
+          points: <Point>[],
           nombre: "",
           email: "",
           transaction: <model.Transaction>[],
-          recycler: <RecyclerModel>[]);
+          recycler: <RecyclerModel>[],
+          id: "");
       return true;
     } catch (e) {
       throw Exception(e);
@@ -98,7 +102,9 @@ class AutenticationDataSource {
     try {
       final usercloud = await _firestore.collection('Manager').doc(uid).get();
       if (usercloud.exists) {
-        userModel = UserModel.fromFirebase(usercloud.data()!);
+        Map<String, dynamic> map = usercloud.data()!;
+        map.addAll({"id": usercloud.id});
+        userModel = UserModel.fromFirebase(map);
         return {"bool": true, "message": ""};
       } else {
         return {"bool": false, "message": "Usuario no encontrado"};

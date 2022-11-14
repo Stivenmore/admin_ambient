@@ -24,7 +24,7 @@ class PercentIndicator extends StatelessWidget {
       height: 7,
       child: LayoutBuilder(builder: (context, constraints) {
         return TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 900),
           tween: Tween(begin: 0.0, end: percent),
           builder: (context, value, _) {
             return Align(

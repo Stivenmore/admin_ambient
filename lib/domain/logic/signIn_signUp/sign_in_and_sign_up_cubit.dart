@@ -12,7 +12,7 @@ class SignInAndUpCubit extends Cubit<SignInAndUpState> {
         super(SignInAndUpInitial());
 
   UserModel get usermodelCubit => _autenticationServices.userModel == null
-      ? UserModel(nombre: '', email: '', transaction: <Transaction>[], recycler: <RecyclerModel>[])
+      ? UserModel(nombre: '', email: '', transaction: <Transaction>[], recycler: <RecyclerModel>[], id: "", points: <Point>[])
       : _autenticationServices.userModel!;
   bool get isloadingGetuser => _autenticationServices.isLoadingGetUser;
 

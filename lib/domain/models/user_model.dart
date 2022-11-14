@@ -1,5 +1,6 @@
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class UserModel {
   final String nombre;
@@ -9,8 +10,11 @@ class UserModel {
   final String? yearsregister;
   final String? lastlogin;
   final String? img;
+  final String? id;
+  final bool? activate;
   final List<Transaction> transaction;
   final List<RecyclerModel> recycler;
+  final List<Point> points;
 
   UserModel(
       {required this.nombre,
@@ -22,7 +26,10 @@ class UserModel {
       this.lastlogin,
       this.monthregister,
       this.yearsregister,
-      required this.recycler});
+      required this.recycler,
+      required this.id,
+      required this.points,
+      this.activate = false});
 
   factory UserModel.fromFirebase(Map<String, dynamic> map) {
     return UserModel(
@@ -43,7 +50,14 @@ class UserModel {
             ? (map["recycler"] as Iterable)
                 .map((e) => RecyclerModel.fromJson(e))
                 .toList()
-            : <RecyclerModel>[]);
+            : <RecyclerModel>[],
+        id: map["id"] as String? ?? "",
+        activate: map["activate"] ?? false,
+        points: map["pointList"] != null
+            ? (map["pointList"] as Iterable)
+                .map((e) => Point.fromJson(e))
+                .toList()
+            : <Point>[],);
   }
 }
 
@@ -114,6 +128,23 @@ class RecyclerModel {
       plastico: map["plastico"] as int? ?? 0,
       vidrio: map["vidrio"] as int? ?? 0,
       time: map["time"] as String? ?? "...",
+    );
+  }
+}
+
+class Point {
+  final String time;
+  final int point;
+  final String type;
+
+  Point({required this.time, required this.point, required this.type});
+
+  factory Point.fromJson(Map map) {
+    return Point(
+      point: map["point"] as int? ?? 0,
+      type: map["type"] as String? ?? "none",
+      time: map["time"] as String? ??
+          DateFormat('yyyy-MM-dd').format(DateTime.now()),
     );
   }
 }

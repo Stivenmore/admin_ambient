@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => AnalyticsCubit(analyticsDataSource)),
         BlocProvider(create: (_) => SearchCubit(searchDatasource)),
         BlocProvider(create: (_) => UserCubit(userDataSource)),
-        BlocProvider(create: (_) => GeneralCubit()),
+        BlocProvider(create: (_) => GeneralCubit(userDataSource)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

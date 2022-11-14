@@ -1,13 +1,17 @@
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/models/user_model.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/calculatepoint.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/formaddrecycler.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/info_card.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/lastrecycler.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/list_recycler.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/components/percent_card.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/performance/components/performance_label.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DetailUserScreen extends StatefulWidget {
   const DetailUserScreen({super.key});
@@ -17,211 +21,122 @@ class DetailUserScreen extends StatefulWidget {
 }
 
 class _DetailUserScreenState extends State<DetailUserScreen> {
+  TextEditingController controllerPlastico = TextEditingController();
+  TextEditingController controllerMetal = TextEditingController();
+  TextEditingController controllerPapel = TextEditingController();
+  TextEditingController controllerCarton = TextEditingController();
+  TextEditingController controllerVidrio = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<UserCubit>();
-    final usermodel = user.state.userModel;
     Responsive responsive = Responsive(context);
-    return WillPopScope(
-        onWillPop: () async {
-          context.read<GeneralCubit>().changePageDashboard(0);
-          return true;
-        },
-        child: SizedBox(
-          height: responsive.height,
-          width: responsive.width,
-          child: Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: SingleChildScrollView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InfoCard(user: user, usermodel: usermodel),
-                      const SizedBox(
-                        height: 15,
+    return WillPopScope(onWillPop: () async {
+      context.read<GeneralCubit>().changePageDashboard(0);
+      return true;
+    }, child: Builder(builder: (context) {
+      final user = context.watch<UserCubit>();
+      final usermodel = context
+          .select<UserCubit, UserModel>((value) => value.state.userModel);
+      return SizedBox(
+        height: responsive.height,
+        width: responsive.width,
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InfoCard(user: user, usermodel: usermodel),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    LastRecycler(usermodel: usermodel),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          color: UniCodes.cielperformance,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: PerformanceLabel(
+                        backgrouudIcon: UniCodes.orangeperformance,
+                        avaible: usermodel.activate ?? false,
+                        text: usermodel.activate ?? false
+                            ? "Notificacion de recoleccion activa"
+                            : "Sin notificacion de recoleccion",
+                        isDark: false,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    if (responsive.width < 1350)
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Ultimo recyclaje",
-                            style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                              color: UniCodes.blueperformance,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            )),
-                          ),
                           const SizedBox(
-                            height: 15,
+                            height: 10,
                           ),
-                          PercenCard(
-                            label: "Plastico",
-                            value: usermodel.recycler.last.plastico,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          PercenCard(
-                            label: "Metal",
-                            value: usermodel.recycler.last.metal,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          PercenCard(
-                            label: "Papel",
-                            value: usermodel.recycler.last.papel,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          PercenCard(
-                            label: "Carton",
-                            value: usermodel.recycler.last.carton,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          PercenCard(
-                            label: "Vidrio",
-                            value: usermodel.recycler.last.vidrio,
+                          FormAddRecycler(
+                            controllerPlastico: controllerPlastico,
+                            controllerMetal: controllerMetal,
+                            controllerPapel: controllerPapel,
+                            controllerCarton: controllerCarton,
+                            controllerVidrio: controllerVidrio,
+                            userModel: usermodel,
                           ),
                         ],
                       ),
-                      if (responsive.width < 865)
-                        ListRecycler(
-                          usermodel: usermodel,
-                        )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  if (responsive.width > 865)
-                    ListRecycler(
-                      usermodel: usermodel,
-                    )
-                ],
-              ),
-            ),
-          ),
-        ));
-  }
-}
-
-class ListRecycler extends StatefulWidget {
-  final UserModel usermodel;
-  const ListRecycler({super.key, required this.usermodel});
-
-  @override
-  State<ListRecycler> createState() => _ListRecyclerState();
-}
-
-class _ListRecyclerState extends State<ListRecycler> {
-  @override
-  Widget build(BuildContext context) {
-    Responsive responsive = Responsive(context);
-    return Padding(
-      padding: EdgeInsets.only(top: responsive.width > 865 ? 160 : 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Lista de reciclaje",
-            style: GoogleFonts.roboto(
-                textStyle: TextStyle(
-              color: UniCodes.blueperformance,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            )),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: responsive.width > 500 ? 300 : 250,
-            height: responsive.height,
-            child: SingleChildScrollView(
-              child: ExpansionPanelList(
-                  animationDuration: const Duration(milliseconds: 500),
-                  dividerColor: UniCodes.cielperformance,
-                  elevation: 1,
-                  expansionCallback: (int index, bool isExpanded) {
-                    setState(() {
-                      widget.usermodel.recycler[index].isExpanded = !isExpanded;
-                    });
-                  },
-                  children: widget.usermodel.recycler
-                      .map<ExpansionPanel>((RecyclerModel recyclerModel) {
-                    return ExpansionPanel(
-                        headerBuilder: (BuildContext context, bool isExpanded) {
-                          return ListTile(
-                            title: Text(
-                              recyclerModel.time,
-                              style: GoogleFonts.roboto(),
-                            ),
-                          );
-                        },
-                        body: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 200,
-                            width: 250,
-                            child: ListView(
-                              children: [
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                PercenCard(
-                                  label: "Plastico",
-                                  value: recyclerModel.plastico,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                PercenCard(
-                                  label: "Metal",
-                                  value: recyclerModel.metal,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                PercenCard(
-                                  label: "Papel",
-                                  value: recyclerModel.papel,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                PercenCard(
-                                  label: "Carton",
-                                  value: recyclerModel.carton,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                PercenCard(
-                                  label: "Vidrio",
-                                  value: recyclerModel.vidrio,
-                                ),
-                              ],
-                            ),
-                          ),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
                         ),
-                        isExpanded: recyclerModel.isExpanded);
-                  }).toList()),
+                        CalculateSuccess(
+                          userModel: usermodel,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                    if (responsive.width < 865)
+                      ListRecycler(
+                        usermodel: usermodel,
+                      )
+                  ],
+                ),
+                if (responsive.width > 865)
+                  ListRecycler(
+                    usermodel: usermodel,
+                  ),
+                if (responsive.width > 1350)
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 180, left: 30, bottom: 20),
+                    child: Column(
+                      children: [
+                        FormAddRecycler(
+                          controllerPlastico: controllerPlastico,
+                          controllerMetal: controllerMetal,
+                          controllerPapel: controllerPapel,
+                          controllerCarton: controllerCarton,
+                          controllerVidrio: controllerVidrio,
+                          userModel: usermodel,
+                        ),
+                      ],
+                    ),
+                  )
+              ],
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    }));
   }
 }

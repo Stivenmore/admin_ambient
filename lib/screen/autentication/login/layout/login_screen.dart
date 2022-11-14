@@ -1,3 +1,4 @@
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
 import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
@@ -42,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 break;
               case SignInAndUpLoaded:
                 controller.success();
+                context.read<GeneralCubit>().pricepoint();
                 Navigator.pushNamedAndRemoveUntil(context, '/home', ((route) => false));
                 break;
               case SignInAndUpError:

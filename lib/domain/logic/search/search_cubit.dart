@@ -17,8 +17,11 @@ class SearchCubit extends Cubit<SearchState> {
     try {
       final List<QueryDocumentSnapshot<Map<String, dynamic>>> resp =
           await _searchDatasource.getQueryForEmail(email);
-      List<UserModel> usermodel =
-          resp.map((e) => UserModel.fromFirebase(e.data())).toList();
+      List<UserModel> usermodel = resp.map((e) {
+        Map<String, dynamic> map = e.data();
+        map.addAll({"id": e.id});
+        return UserModel.fromFirebase(map);
+      }).toList();
       emit(SearchLoaded(usermodel));
     } catch (e) {
       emit(const SearchError("Error"));
