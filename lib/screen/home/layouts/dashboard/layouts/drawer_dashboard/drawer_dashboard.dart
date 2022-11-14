@@ -139,15 +139,23 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                               generalcubit.changeGlobalCurrentPage(0);
                             }
                           },
-                          child: Text(
-                            "   | General y rendimiento",
-                            style: GoogleFonts.roboto(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: value2 == 0
-                                    ? UniCodes.orangeperformance2
-                                    : UniCodes.gray2),
-                            textAlign: TextAlign.left,
+                          child: Row(
+                            children: [
+                              Text(
+                                "   | General ",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: value2 == 0
+                                        ? UniCodes.orangeperformance2
+                                        : UniCodes.gray2),
+                                textAlign: TextAlign.left,
+                              ),
+                              Icon(Icons.home,
+                                  color: value2 == 0
+                                      ? UniCodes.orangeperformance2
+                                      : UniCodes.gray2)
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -160,38 +168,53 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                               generalcubit.changeGlobalCurrentPage(1);
                             }
                           },
-                          child: Text(
-                            "   | Notificaciones",
-                            style: GoogleFonts.roboto(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: value2 == 1
-                                    ? UniCodes.orangeperformance2
-                                    : UniCodes.gray2),
-                            textAlign: TextAlign.left,
+                          child: Row(
+                            children: [
+                              Text(
+                                "   | Notificaciones ",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: value2 == 1
+                                        ? UniCodes.orangeperformance2
+                                        : UniCodes.gray2),
+                                textAlign: TextAlign.left,
+                              ),
+                              Icon(Icons.notifications,
+                                  color: value2 == 1
+                                      ? UniCodes.orangeperformance2
+                                      : UniCodes.gray2)
+                            ],
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         TextButton(
-                          onPressed: () {
-                            if (value2 != 2 &&
-                                statePodcast != PodCastEnum.loading) {
-                              generalcubit.changeGlobalCurrentPage(2);
-                            }
-                          },
-                          child: Text(
-                            "   | Podcast",
-                            style: GoogleFonts.roboto(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: value2 == 2
-                                    ? UniCodes.orangeperformance2
-                                    : UniCodes.gray2),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
+                            onPressed: () {
+                              if (value2 != 2 &&
+                                  statePodcast != PodCastEnum.loading) {
+                                generalcubit.changeGlobalCurrentPage(2);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "   | Podcast ",
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: value2 == 2
+                                          ? UniCodes.orangeperformance2
+                                          : UniCodes.gray2),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Icon(Icons.settings_voice_rounded,
+                                    color: value2 == 2
+                                        ? UniCodes.orangeperformance2
+                                        : UniCodes.gray2)
+                              ],
+                            )),
                       ],
                     )
                   ],
