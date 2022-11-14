@@ -1,3 +1,4 @@
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
 import 'package:admin_ambient/screen/utils/animation/fade_animattion.dart';
 import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
@@ -16,10 +17,11 @@ class LogUpScreen extends StatefulWidget {
   @override
   State<LogUpScreen> createState() => _LogUpScreenState();
 }
+
 const _seconds = Duration(seconds: 1);
 
 class _LogUpScreenState extends State<LogUpScreen> {
-   final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final RoundedLoadingButtonController controller =
       RoundedLoadingButtonController();
   TextEditingController password = TextEditingController();
@@ -34,9 +36,9 @@ class _LogUpScreenState extends State<LogUpScreen> {
     Responsive responsive = Responsive(context);
     SignInAndUpCubit cubit = context.watch<SignInAndUpCubit>();
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         cubit.initializate();
-       return true; 
+        return true;
       },
       child: Scaffold(
         body: BlocListener<SignInAndUpCubit, SignInAndUpState>(
@@ -47,6 +49,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                 break;
               case SignInAndUpLoaded:
                 controller.success();
+                context.read<GeneralCubit>().pricepoint();
                 Navigator.pushNamed(context, '/home');
                 break;
               case SignInAndUpError:
@@ -70,17 +73,25 @@ class _LogUpScreenState extends State<LogUpScreen> {
             height: responsive.height,
             width: responsive.width,
             child: Row(
-              mainAxisAlignment: responsive.isMobile? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: responsive.isMobile
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                  AnimatedContainer(
+                AnimatedContainer(
                   duration: const Duration(milliseconds: 10),
                   key: ValueKey(imageCalculateWidth(responsive)),
                   height: responsive.height,
-                  width:  imageCalculateWidth(responsive),
-                  child: !responsive.isMobile? Image.asset('assets/Splash.png', fit: BoxFit.cover,): null,),
+                  width: imageCalculateWidth(responsive),
+                  child: !responsive.isMobile
+                      ? Image.asset(
+                          'assets/Splash.png',
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
                 SizedBox(
-                  width: responsive.isTablet? responsive.wp(10): 0,
+                  width: responsive.isTablet ? responsive.wp(10) : 0,
                 ),
                 SizedBox(
                   height: responsive.height,
@@ -96,7 +107,7 @@ class _LogUpScreenState extends State<LogUpScreen> {
                           children: [
                             const SizedBox(
                               height: 40,
-                            ),  
+                            ),
                             SizedBox(
                               height: responsive.hp(2),
                             ),
@@ -104,7 +115,8 @@ class _LogUpScreenState extends State<LogUpScreen> {
                               'Registrate',
                               style: GoogleFonts.poppins(
                                   textStyle: const TextStyle(
-                                      fontSize: 24, fontWeight: FontWeight.w700)),
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700)),
                             ),
                             SizedBox(
                               height: responsive.hp(0.5),
@@ -112,98 +124,112 @@ class _LogUpScreenState extends State<LogUpScreen> {
                             Text(
                               'Por favor ingrese los detalles y continue.',
                               style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(color: UniCode.gray2)),
+                                  textStyle: TextStyle(color: UniCodes.gray2)),
                             ),
-                             SizedBox(
+                            SizedBox(
                               height: responsive.hp(2),
                             ),
                             FadeAnimation(
-                              400, SizedBox(
+                              400,
+                              SizedBox(
                                 width: 400,
                                 child: TextFormField(
-                                controller: name,
-                                scrollPadding: const EdgeInsets.all(0.0),
-                                style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w800)),
-                                cursorColor: Theme.of(context).primaryColor,
-                                decoration: InputDecoration(
-                                  labelText: 'Nombre completo',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: BorderSide(color: UniCode.gray2),
+                                  controller: name,
+                                  scrollPadding: const EdgeInsets.all(0.0),
+                                  style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800)),
+                                  cursorColor: Theme.of(context).primaryColor,
+                                  decoration: InputDecoration(
+                                    labelText: 'Nombre completo',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                      borderSide:
+                                          BorderSide(color: UniCodes.gray2),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                      borderSide:
+                                          BorderSide(color: UniCodes.gray2),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: UniCodes.gray2),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                      borderSide:
+                                          BorderSide(color: UniCodes.gray2),
+                                    ),
+                                    focusColor: UniCodes.gray2,
+                                    fillColor: UniCodes.gray2,
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: BorderSide(color: UniCode.gray2),
-                                  ),
-                                  disabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: UniCode.gray2),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: BorderSide(color: UniCode.gray2),
-                                  ),
-                                  focusColor: UniCode.gray2,
-                                  fillColor: UniCode.gray2,
+                                  validator: (String? value) =>
+                                      value!.isEmpty ? 'Campo requerido' : null,
                                 ),
-                                validator: (String? value) =>
-                                    value!.isEmpty ? 'Campo requerido' : null,
-                                                      ),
                               ),
                             ),
                             SizedBox(
                               height: responsive.hp(2),
                             ),
                             FadeAnimation(
-                              500,SizedBox(
+                              500,
+                              SizedBox(
                                 width: 400,
                                 child: StreamBuilder(
                                     stream: registerBloc.emailStream,
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       return TextFormField(
-                                        keyboardType: TextInputType.emailAddress,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         onChanged: registerBloc.changeEmail,
                                         controller: email,
-                                        scrollPadding: const EdgeInsets.all(0.0),
+                                        scrollPadding:
+                                            const EdgeInsets.all(0.0),
                                         style: GoogleFonts.lato(
                                             textStyle: TextStyle(
-                                                color: Theme.of(context).primaryColor,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w800)),
-                                        cursorColor: Theme.of(context).primaryColor,
+                                        cursorColor:
+                                            Theme.of(context).primaryColor,
                                         decoration: InputDecoration(
                                           labelText: 'Correo',
                                           errorMaxLines: 2,
                                           errorText: snapshot.error as String?,
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           disabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
-                                          focusColor: UniCode.gray2,
-                                          fillColor: UniCode.gray2,
+                                          focusColor: UniCodes.gray2,
+                                          fillColor: UniCodes.gray2,
                                         ),
-                                        validator: (String? value) => value!.isEmpty
-                                            ? 'Ingresa tu correo'
-                                            : null,
+                                        validator: (String? value) =>
+                                            value!.isEmpty
+                                                ? 'Ingresa tu correo'
+                                                : null,
                                       );
                                     }),
                               ),
@@ -212,7 +238,8 @@ class _LogUpScreenState extends State<LogUpScreen> {
                               height: responsive.hp(2),
                             ),
                             FadeAnimation(
-                              600, SizedBox(
+                              600,
+                              SizedBox(
                                 width: 400,
                                 child: StreamBuilder(
                                     stream: registerBloc.passwordStream,
@@ -222,13 +249,16 @@ class _LogUpScreenState extends State<LogUpScreen> {
                                         obscureText: obstru,
                                         onChanged: registerBloc.changePassword,
                                         controller: password,
-                                        scrollPadding: const EdgeInsets.all(0.0),
+                                        scrollPadding:
+                                            const EdgeInsets.all(0.0),
                                         style: GoogleFonts.lato(
                                             textStyle: TextStyle(
-                                                color: Theme.of(context).primaryColor,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w800)),
-                                        cursorColor: Theme.of(context).primaryColor,
+                                        cursorColor:
+                                            Theme.of(context).primaryColor,
                                         decoration: InputDecoration(
                                           labelText: 'Contraseña',
                                           suffixIcon: IconButton(
@@ -242,7 +272,8 @@ class _LogUpScreenState extends State<LogUpScreen> {
                                                   });
                                                 } else {
                                                   setState(() {
-                                                    lock = CupertinoIcons.eye_slash;
+                                                    lock = CupertinoIcons
+                                                        .eye_slash;
                                                   });
                                                 }
                                               },
@@ -253,46 +284,51 @@ class _LogUpScreenState extends State<LogUpScreen> {
                                           errorMaxLines: 2,
                                           errorText: snapshot.error as String?,
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           disabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
-                                            borderSide:
-                                                BorderSide(color: UniCode.gray2),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            borderSide: BorderSide(
+                                                color: UniCodes.gray2),
                                           ),
-                                          focusColor: UniCode.gray2,
-                                          fillColor: UniCode.gray2,
+                                          focusColor: UniCodes.gray2,
+                                          fillColor: UniCodes.gray2,
                                         ),
-                                        validator: (String? value) => value!.isEmpty
-                                            ? 'Ingresa tu contraseña'
-                                            : null,
+                                        validator: (String? value) =>
+                                            value!.isEmpty
+                                                ? 'Ingresa tu contraseña'
+                                                : null,
                                       );
                                     }),
                               ),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(right: paddingCalculateWidth(responsive)),
+                              padding: EdgeInsets.only(
+                                  right: paddingCalculateWidth(responsive)),
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () {
-                                  },
+                                  onPressed: () {},
                                   child: Text(
                                     '¿Olvidaste tu contraseña?',
                                     style: GoogleFonts.poppins(
                                         textStyle: const TextStyle(
-                                            color:  Color.fromARGB(255, 29, 62, 17),
+                                            color:
+                                                Color.fromARGB(255, 29, 62, 17),
                                             fontWeight: FontWeight.w600)),
                                   ),
                                 ),
@@ -302,17 +338,21 @@ class _LogUpScreenState extends State<LogUpScreen> {
                               height: responsive.hp(1),
                             ),
                             FadeAnimation(
-                              650, StreamBuilder(
+                              650,
+                              StreamBuilder(
                                   stream: registerBloc.formValidStream,
                                   builder: (context, snapshot) {
                                     return SizedBox(
                                       width: responsive.wp(70),
                                       child: RoundedLoadingButton(
-                                        color: const Color.fromARGB(255, 29, 62, 17),
+                                        color: const Color.fromARGB(
+                                            255, 29, 62, 17),
                                         controller: controller,
                                         onPressed: () async {
                                           if (snapshot.hasData &&
-                                              _formKey.currentState!.validate()&& name.text.isNotEmpty) {
+                                              _formKey.currentState!
+                                                  .validate() &&
+                                              name.text.isNotEmpty) {
                                             await cubit.signUpMethod(
                                                 email: email.text,
                                                 password: password.text,
@@ -336,7 +376,8 @@ class _LogUpScreenState extends State<LogUpScreen> {
                               height: responsive.hp(3),
                             ),
                             FadeAnimation(
-                              700, GestureDetector(
+                              700,
+                              GestureDetector(
                                 onTap: () {
                                   cubit.initializate();
                                   Navigator.pop(context);
@@ -345,12 +386,13 @@ class _LogUpScreenState extends State<LogUpScreen> {
                                     text: TextSpan(children: [
                                   TextSpan(
                                       text: 'Ya tienes una cuenta! ',
-                                      style:
-                                          GoogleFonts.poppins(color: UniCode.gray3)),
+                                      style: GoogleFonts.poppins(
+                                          color: UniCodes.gray3)),
                                   TextSpan(
                                       text: 'Inicia sesion',
                                       style: GoogleFonts.poppins(
-                                          color: const Color.fromARGB(255, 29, 62, 17)))
+                                          color: const Color.fromARGB(
+                                              255, 29, 62, 17)))
                                 ])),
                               ),
                             )
@@ -360,8 +402,8 @@ class _LogUpScreenState extends State<LogUpScreen> {
                     ),
                   ),
                 ),
-              SizedBox(
-                  width: responsive.isTablet? responsive.wp(10): 0,
+                SizedBox(
+                  width: responsive.isTablet ? responsive.wp(10) : 0,
                 ),
               ],
             ),

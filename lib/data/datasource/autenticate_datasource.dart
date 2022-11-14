@@ -2,13 +2,15 @@ import 'package:admin_ambient/domain/models/user_model.dart';
 import 'package:admin_ambient/domain/services/prefs_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:admin_ambient/domain/models/user_model.dart' as model;
 
 class AutenticationDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final prefs = UserPreferences();
-  late UserModel userModel;
+  UserModel? userModel;
   String get userUid => _firebaseAuth.currentUser!.uid;
+  bool isLoadingGetUser = false;
 
   bool get isAuth =>
       _firebaseAuth.currentUser != null &&
@@ -23,8 +25,10 @@ class AutenticationDataSource {
         final usercloud =
             await _firestore.collection('Manager').doc(user.user!.uid).get();
         if (usercloud.exists) {
-        prefs.token = usercloud.id;
-          userModel = UserModel.fromFirebase(usercloud.data()!);
+          prefs.token = usercloud.id;
+          Map<String, dynamic> map = usercloud.data()!;
+          map.addAll({"id": usercloud.id});
+          userModel = UserModel.fromFirebase(map);
           return {"bool": true, "message": ""};
         } else {
           return {"bool": false, "message": "Usuario no encontrado"};
@@ -42,6 +46,7 @@ class AutenticationDataSource {
       required String password,
       required String fullname}) async {
     try {
+      isLoadingGetUser = true;
       final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (credentials.user!.uid != '') {
@@ -50,16 +55,19 @@ class AutenticationDataSource {
           'name': fullname,
           'password': password,
         });
-       prefs.token = credentials.user!.uid;
+        prefs.token = credentials.user!.uid;
         userModel = UserModel.fromFirebase({
           "name": fullname,
           "email": email,
         });
+        isLoadingGetUser = false;
         return {"bool": true, "message": ""};
       } else {
+        isLoadingGetUser = false;
         return {"bool": false, "message": "Usuario no encontrado"};
       }
     } catch (e) {
+      isLoadingGetUser = false;
       throw Exception(e);
     }
   }
@@ -78,8 +86,14 @@ class AutenticationDataSource {
       await _firebaseAuth.signOut();
       prefs.token = "";
       userModel = UserModel(
+          points: <Point>[],
           nombre: "",
-          email: "");
+          email: "",
+          transaction: <model.Transaction>[],
+          recycler: <RecyclerModel>[],
+          id: "",
+          phone: "",
+          address: "");
       return true;
     } catch (e) {
       throw Exception(e);
@@ -90,7 +104,9 @@ class AutenticationDataSource {
     try {
       final usercloud = await _firestore.collection('Manager').doc(uid).get();
       if (usercloud.exists) {
-        userModel = UserModel.fromFirebase(usercloud.data()!);
+        Map<String, dynamic> map = usercloud.data()!;
+        map.addAll({"id": usercloud.id});
+        userModel = UserModel.fromFirebase(map);
         return {"bool": true, "message": ""};
       } else {
         return {"bool": false, "message": "Usuario no encontrado"};
