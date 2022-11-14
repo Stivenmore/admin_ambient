@@ -1,3 +1,4 @@
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:admin_ambient/screen/utils/animation/fade_animattion.dart';
@@ -30,99 +31,150 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final generalcubit = context.read<GeneralCubit>();
     Responsive responsive = Responsive(context);
-    return FadeAnimation(
-      500,
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50.0),
-        child: SizedBox(
-          height: responsive.height - responsive.st(8),
-          width: responsive.wp(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 10, top: 10),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: UniCodes.coffee,
-                        borderRadius: BorderRadius.circular(13)),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, top: 10),
-                    child: Text(
-                      'Dashboard\n  Ambient',
+    return Builder(builder: (context) {
+      final value2 = context.select<GeneralCubit, int>(
+          (value2) => value2.state.globalcurrentpage);
+      return FadeAnimation(
+        500,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50.0),
+          child: SizedBox(
+            height: responsive.height - responsive.st(8),
+            width: responsive.wp(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, top: 10),
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: UniCodes.coffee,
+                          borderRadius: BorderRadius.circular(13)),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 20, top: 10),
+                      child: Text(
+                        'Dashboard\n  Ambient',
+                        style: GoogleFonts.roboto(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                  width: 0,
+                ),
+                Column(
+                  children: [
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(48),
+                          child: SizedBox(
+                            height: 70,
+                            width: 70,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.cubit.usermodelCubit.img!
+                                  .toString()
+                                  .replaceAll('"', '')
+                                  .trim(),
+                              placeholder: (context, url) =>
+                                  Image.asset('assets/no-image.jpg'),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fadeOutDuration: const Duration(seconds: 1),
+                              fadeInDuration: const Duration(seconds: 2),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            bottom: -2,
+                            right: -2,
+                            child: SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(48),
+                                ),
+                                child: const Icon(
+                                  CupertinoIcons.antenna_radiowaves_left_right,
+                                  size: 14,
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      widget.cubit.usermodelCubit.nombre,
                       style: GoogleFonts.roboto(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-                width: 0,
-              ),
-              Column(
-                children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(48),
-                        child: SizedBox(
-                          height: 70,
-                          width: 70,
-                          child: CachedNetworkImage(
-                            imageUrl: widget.cubit.usermodelCubit.img!
-                                .toString()
-                                .replaceAll('"', '')
-                                .trim(),
-                            placeholder: (context, url) =>
-                                Image.asset('assets/no-image.jpg'),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            fadeOutDuration: const Duration(seconds: 1),
-                            fadeInDuration: const Duration(seconds: 2),
-                            fit: BoxFit.cover,
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            if (value2 != 0) {
+                              generalcubit.changeGlobalCurrentPage(0);
+                            }
+                          },
+                          child: Text(
+                            "   | General y rendimiento",
+                            style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: value2 == 0
+                                    ? UniCodes.cielperformance
+                                    : UniCodes.gray2),
+                            textAlign: TextAlign.left,
                           ),
                         ),
-                      ),
-                      Positioned(
-                          bottom: -2,
-                          right: -2,
-                          child: SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(48),
-                              ),
-                              child: const Icon(
-                                CupertinoIcons.antenna_radiowaves_left_right,
-                                size: 14,
-                              ),
-                            ),
-                          ))
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    widget.cubit.usermodelCubit.nombre,
-                    style: GoogleFonts.roboto(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ],
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (value2 != 1) {
+                              generalcubit.changeGlobalCurrentPage(1);
+                            }
+                          },
+                          child: Text(
+                            "   | Notificaciones",
+                            style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: value2 == 1
+                                    ? UniCodes.cielperformance
+                                    : UniCodes.gray2),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

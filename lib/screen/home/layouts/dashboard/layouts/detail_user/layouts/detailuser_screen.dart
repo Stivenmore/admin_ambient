@@ -50,8 +50,18 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
+                    IconButton(
+                        onPressed: () {
+                          context.read<GeneralCubit>().changePageDashboard(0);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: UniCodes.cielperformance,
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     InfoCard(user: user, usermodel: usermodel),
                     const SizedBox(
                       height: 50,
@@ -99,8 +109,16 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        CalculateSuccess(
-                          userModel: usermodel,
+                        Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CalculateSuccess(
+                              userModel: usermodel,
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -108,8 +126,9 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                       ],
                     ),
                     if (responsive.width < 865)
-                      SizedBox(
-                        height: 250,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: responsive.width > 865 ? 100 : 20),
                         child: ListRecycler(
                           usermodel: usermodel,
                         ),
@@ -117,8 +136,12 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                   ],
                 ),
                 if (responsive.width > 865)
-                  ListRecycler(
-                    usermodel: usermodel,
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: responsive.width > 865 ? 100 : 20),
+                    child: ListRecycler(
+                      usermodel: usermodel,
+                    ),
                   ),
                 if (responsive.width > 1350)
                   Padding(

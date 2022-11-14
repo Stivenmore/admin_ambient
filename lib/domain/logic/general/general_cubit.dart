@@ -12,6 +12,10 @@ class GeneralCubit extends Cubit<GeneralState> {
     emit(state.copyWith(currentPageDashboard: page));
   }
 
+  void changeGlobalCurrentPage(int page) {
+    emit(state.copyWith(globalcurrentpage: page));
+  }
+
   void pricepoint() async {
     try {
       final int price = await userDataSource.getConfig();

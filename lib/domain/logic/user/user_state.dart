@@ -22,7 +22,7 @@ class UserState extends Equatable {
             nombre: "",
             email: "",
             transaction: <Transaction>[],
-            recycler: <RecyclerModel>[], id: "", points: <Point>[]);
+            recycler: <RecyclerModel>[], id: "", points: <Point>[], phone: "", address: "");
     this.stateUserModelEnum = stateUserModelEnum ?? StateUserModelEnum.none;
     this.statePointsDown = statePointsDown ?? StatePointsDown.none;
     this.statePointsUp = statePointsUp ?? StatePointsUp.none;

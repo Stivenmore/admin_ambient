@@ -56,7 +56,9 @@ class UserCubit extends Cubit<UserState> {
                 id: userModel.id,
                 points: list2,
                 activate: userModel.activate,
-                lastlogin: userModel.lastlogin)));
+                lastlogin: userModel.lastlogin,
+                phone: userModel.phone,
+                address: userModel.address)));
       } else {
         emit(state.copyWith(statePointsDown: StatePointsDown.loaded));
       }
@@ -129,6 +131,8 @@ class UserCubit extends Cubit<UserState> {
             id: userModel.id,
             points: points,
             activate: userModel.activate,
-            lastlogin: userModel.lastlogin)));
+            lastlogin: userModel.lastlogin,
+            phone: userModel.phone,
+            address: userModel.address)));
   }
 }

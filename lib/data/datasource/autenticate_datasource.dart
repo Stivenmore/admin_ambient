@@ -91,7 +91,9 @@ class AutenticationDataSource {
           email: "",
           transaction: <model.Transaction>[],
           recycler: <RecyclerModel>[],
-          id: "");
+          id: "",
+          phone: "",
+          address: "");
       return true;
     } catch (e) {
       throw Exception(e);

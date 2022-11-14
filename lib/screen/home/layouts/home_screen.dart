@@ -1,5 +1,6 @@
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/dashboard_screen.dart';
+import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/drawer_dashboard/drawer_dashboard.dart';
 import 'package:admin_ambient/screen/splash/layouts/splash_screen.dart';
 import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
@@ -22,7 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: UniCodes.blueblack,
       drawer: imageCalculateWidthHome(responsive) != DisplayType.web
-          ? const Drawer()
+          ? Drawer(
+              width: 150,
+              child: DrawerDashboard(
+                cubit: cubit,
+              ),
+            )
           : Container(),
       body: Padding(
         padding: EdgeInsets.all(

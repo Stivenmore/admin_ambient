@@ -15,6 +15,9 @@ class UserModel {
   final List<Transaction> transaction;
   final List<RecyclerModel> recycler;
   final List<Point> points;
+  final String phone;
+  final String address;
+  bool isExpanded;
 
   UserModel(
       {required this.nombre,
@@ -29,7 +32,10 @@ class UserModel {
       required this.recycler,
       required this.id,
       required this.points,
-      this.activate = false});
+      this.activate = false,
+      required this.address,
+      required this.phone,
+      this.isExpanded = false});
 
   factory UserModel.fromFirebase(Map<String, dynamic> map) {
     return UserModel(
@@ -57,7 +63,9 @@ class UserModel {
             ? (map["pointList"] as Iterable)
                 .map((e) => Point.fromJson(e))
                 .toList()
-            : <Point>[],);
+            : <Point>[],
+        phone: map["phone"] as String? ?? "",
+        address: map["address"] as String? ?? "");
   }
 }
 
