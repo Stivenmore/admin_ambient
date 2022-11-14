@@ -1,5 +1,6 @@
 import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/models/user_model.dart';
+import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
 import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,9 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
         child: Padding(
           padding: EdgeInsets.all(responsive.width > 350 ? 20.0 : 10),
           child: SizedBox(
-            width: responsive.width > 300 ? 300 : 165,
+            width: imageCalculateWidthHome(responsive) == DisplayType.mobile
+                ? 200
+                : 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

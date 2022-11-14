@@ -48,12 +48,9 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-                  mainAxisAlignment: responsive.width > 300
-                      ? MainAxisAlignment.start
-                      : MainAxisAlignment.center,
-                  crossAxisAlignment: responsive.width > 300
-                      ? CrossAxisAlignment.start
-                      : CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     InfoCard(user: user, usermodel: usermodel),
                     const SizedBox(
