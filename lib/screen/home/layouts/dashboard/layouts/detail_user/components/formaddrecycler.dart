@@ -54,7 +54,7 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
           padding: EdgeInsets.all(responsive.width > 350 ? 20.0 : 10),
           child: SizedBox(
             width: imageCalculateWidthHome(responsive) == DisplayType.mobile
-                ? 200
+                ? 220
                 : 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
