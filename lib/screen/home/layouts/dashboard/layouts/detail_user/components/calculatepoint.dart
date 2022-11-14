@@ -116,7 +116,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
             height: 30,
           ),
           RoundedLoadingButton(
-            width: 120,
+            width: 100,
             color: widget.userModel.points.last.point > 0
                 ? controller.text.isNotEmpty &&
                         int.parse(controller.text) <
@@ -142,7 +142,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                 'Convertir en dinero',
                 style: GoogleFonts.poppins(
                     textStyle: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                        fontSize: 14, fontWeight: FontWeight.bold)),
               ),
             ),
           ),
