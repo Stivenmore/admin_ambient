@@ -1,5 +1,6 @@
 import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/models/user_model.dart';
+import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +36,7 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
 
   @override
   Widget build(BuildContext context) {
+    Responsive responsive = Responsive(context);
     return Builder(builder: (context) {
       final value = context.select<UserCubit, StatePointsUp>(
           (value) => value.state.statePointsUp);
@@ -48,9 +50,9 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(responsive.width > 350 ? 20.0 : 10),
           child: SizedBox(
-            width: 300,
+            width: responsive.width > 350 ? 300 : 220,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +62,7 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
                   style: GoogleFonts.roboto(
                       textStyle: TextStyle(
                     color: UniCodes.blueperformance,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                   )),
                 ),
@@ -255,6 +257,7 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
                 RoundedLoadingButton(
                   color: const Color.fromARGB(255, 29, 62, 17),
                   controller: controller,
+                  width: responsive.width > 350 ? 210 : 170,
                   successColor: UniCodes.orangeperformance2,
                   onPressed: () async {
                     if (validation()) {
@@ -274,10 +277,10 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
                     }
                   },
                   child: Text(
-                    'Iniciar sesion',
+                    'Agregar',
                     style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                            fontSize: 17, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

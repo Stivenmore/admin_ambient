@@ -36,14 +36,17 @@ class PerformanceLabel extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text(
-          text,
-          style: GoogleFonts.roboto(
-              textStyle: TextStyle(
-                  fontSize: 14,
-                  color: !isDark
-                      ? UniCodes.whiteperformance
-                      : UniCodes.blueperformance)),
+        SizedBox(
+          width: 120,
+          child: Text(
+            text,
+            style: GoogleFonts.roboto(
+                textStyle: TextStyle(
+                    fontSize: 14,
+                    color: !isDark
+                        ? UniCodes.whiteperformance
+                        : UniCodes.blueperformance)),
+          ),
         )
       ],
     );

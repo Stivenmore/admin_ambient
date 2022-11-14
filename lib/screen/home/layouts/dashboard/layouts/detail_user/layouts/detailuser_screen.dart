@@ -64,6 +64,7 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                       decoration: BoxDecoration(
                           color: UniCodes.cielperformance,
                           borderRadius: BorderRadius.circular(12)),
+                      width: 300,
                       child: PerformanceLabel(
                         backgrouudIcon: UniCodes.orangeperformance,
                         avaible: usermodel.activate ?? false,
@@ -106,8 +107,11 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
                       ],
                     ),
                     if (responsive.width < 865)
-                      ListRecycler(
-                        usermodel: usermodel,
+                      SizedBox(
+                        height: 350,
+                        child: ListRecycler(
+                          usermodel: usermodel,
+                        ),
                       )
                   ],
                 ),

@@ -63,7 +63,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                 Container(
                   decoration: boxDecoration,
                   height: 50,
-                  width: 150,
+                  width: 100,
                   child: TextFormField(
                     controller: controller,
                     onChanged: (v) {
@@ -100,7 +100,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                 Container(
                   alignment: Alignment.centerLeft,
                   height: 50,
-                  width: 130,
+                  width: 100,
                   decoration: boxDecoration,
                   child: Text(
                     "  =  $value",
