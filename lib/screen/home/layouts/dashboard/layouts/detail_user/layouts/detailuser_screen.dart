@@ -45,11 +45,15 @@ class _DetailUserScreenState extends State<DetailUserScreen> {
           child: SingleChildScrollView(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: responsive.width > 300
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.center,
+                  crossAxisAlignment: responsive.width > 300
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.center,
                   children: [
                     InfoCard(user: user, usermodel: usermodel),
                     const SizedBox(
