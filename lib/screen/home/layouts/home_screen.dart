@@ -25,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ? const Drawer()
           : Container(),
       body: Padding(
-        padding: EdgeInsets.all(responsive.st(8)),
+        padding: EdgeInsets.all(
+            imageCalculateWidthHome(responsive) != DisplayType.web
+                ? 5
+                : responsive.st(8)),
         child: Container(
           height: double.infinity,
           width: double.infinity,

@@ -71,6 +71,7 @@ class InfoCardDetailUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Responsive responsive = Responsive(context);
     return Builder(builder: (context) {
       final usermodel = context
           .select<UserCubit, UserModel>((value) => value.state.userModel);
@@ -99,7 +100,7 @@ class InfoCardDetailUser extends StatelessWidget {
             style: GoogleFonts.roboto(
                 textStyle: TextStyle(
               color: UniCodes.blueperformance,
-              fontSize: 22,
+              fontSize: responsive.width > 350 ? 22 : 17,
               fontWeight: FontWeight.w700,
             )),
           ),
@@ -113,7 +114,7 @@ class InfoCardDetailUser extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
                   color: UniCodes.gray3,
-                  fontSize: 16,
+                  fontSize: responsive.width > 350 ? 16 : 14,
                   fontWeight: FontWeight.w500,
                 )),
               ),
@@ -127,7 +128,7 @@ class InfoCardDetailUser extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
                   color: UniCodes.gray3,
-                  fontSize: 16,
+                  fontSize: responsive.width > 350 ? 16 : 14,
                   fontWeight: FontWeight.w500,
                 )),
               ),
@@ -143,7 +144,7 @@ class InfoCardDetailUser extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
                   color: UniCodes.gray3,
-                  fontSize: 16,
+                  fontSize: responsive.width > 350 ? 16 : 14,
                   fontWeight: FontWeight.w500,
                 )),
               ),
@@ -155,7 +156,7 @@ class InfoCardDetailUser extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
                   color: UniCodes.gray3,
-                  fontSize: 16,
+                  fontSize: responsive.width > 350 ? 16 : 14,
                   fontWeight: FontWeight.w500,
                 )),
               ),

@@ -52,7 +52,7 @@ class _FormAddRecyclerState extends State<FormAddRecycler> {
         child: Padding(
           padding: EdgeInsets.all(responsive.width > 350 ? 20.0 : 10),
           child: SizedBox(
-            width: responsive.width > 350 ? 300 : 220,
+            width: responsive.width > 350 ? 300 : 165,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

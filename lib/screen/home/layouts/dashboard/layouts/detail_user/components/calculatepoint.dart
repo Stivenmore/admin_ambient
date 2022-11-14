@@ -1,6 +1,7 @@
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/models/user_model.dart';
+import 'package:admin_ambient/screen/utils/responsive/responsive.dart';
 import 'package:admin_ambient/screen/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
   Widget build(BuildContext context) {
     final cubit = context.watch<GeneralCubit>();
     final usercubit = context.read<UserCubit>();
+    Responsive responsive = Responsive(context);
     return Builder(builder: (context) {
       final value2 = context.select<UserCubit, StatePointsDown>(
           (value2) => value2.state.statePointsDown);
@@ -63,7 +65,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                 Container(
                   decoration: boxDecoration,
                   height: 50,
-                  width: 100,
+                  width: responsive.width > 350 ? 100 : 70,
                   child: TextFormField(
                     controller: controller,
                     onChanged: (v) {
@@ -82,7 +84,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                           "Escriba...",
                           style: GoogleFonts.roboto(
                               textStyle: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: responsive.width > 350 ? 18 : 14,
                                   color: UniCodes.blueperformance)),
                         ),
                         border: borderStyle,
@@ -100,7 +102,7 @@ class _CalculateSuccessState extends State<CalculateSuccess> {
                 Container(
                   alignment: Alignment.centerLeft,
                   height: 50,
-                  width: 100,
+                  width: responsive.width > 350 ? 100 : 70,
                   decoration: boxDecoration,
                   child: Text(
                     "  =  $value",
