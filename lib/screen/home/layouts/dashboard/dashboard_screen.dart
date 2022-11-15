@@ -1,9 +1,11 @@
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/podcast/podcast_cubit.dart';
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
+import 'package:admin_ambient/domain/services/prefs_services.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/components/analytics_components.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/detail_user/layouts/detailuser_screen.dart';
 import 'package:admin_ambient/screen/home/layouts/dashboard/layouts/drawer_dashboard/drawer_dashboard.dart';
+import 'package:admin_ambient/screen/home/layouts/notes/notes_screen.dart';
 import 'package:admin_ambient/screen/home/layouts/notifications/layouts/notificacions_screen.dart';
 import 'package:admin_ambient/screen/home/layouts/podcast/podcast_screen.dart';
 import 'package:admin_ambient/screen/utils/global_functions/global_functions.dart';
@@ -24,7 +26,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final globalScreen = {
     0: const DashBoardScreen(),
     1: const NotificacionScreen(),
-    2: const PodCastScreen()
+    2: const PodCastScreen(),
+    3: const NoteScreen()
   };
 
   @override
@@ -124,7 +127,32 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 icon: Icon(Icons.settings_voice_rounded,
                                     color: value2 == 2
                                         ? UniCodes.orangeperformance2
-                                        : UniCodes.gray2))
+                                        : UniCodes.gray2)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  if (value2 != 3 &&
+                                      statePodcast != PodCastEnum.loading) {
+                                    generalcubit.changeGlobalCurrentPage(3);
+                                  }
+                                },
+                                icon: Icon(Icons.notes,
+                                    color: value2 == 3
+                                        ? UniCodes.orangeperformance2
+                                        : UniCodes.gray2)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  UserPreferences().token = "";
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, '/', ((route) => false));
+                                },
+                                icon: Icon(Icons.exit_to_app,
+                                    color: UniCodes.cielperformance)),
                           ],
                         ),
                       );

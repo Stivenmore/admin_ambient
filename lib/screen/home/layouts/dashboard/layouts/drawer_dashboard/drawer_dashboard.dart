@@ -1,5 +1,6 @@
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
 import 'package:admin_ambient/domain/logic/podcast/podcast_cubit.dart';
+import 'package:admin_ambient/domain/services/prefs_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:admin_ambient/screen/utils/animation/fade_animattion.dart';
@@ -213,6 +214,57 @@ class _DrawerDashboardState extends State<DrawerDashboard> {
                                     color: value2 == 2
                                         ? UniCodes.orangeperformance2
                                         : UniCodes.gray2)
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              if (value2 != 3 &&
+                                  statePodcast != PodCastEnum.loading) {
+                                generalcubit.changeGlobalCurrentPage(3);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "   | Notas ",
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: value2 == 3
+                                          ? UniCodes.orangeperformance2
+                                          : UniCodes.gray2),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Icon(Icons.notes,
+                                    color: value2 == 3
+                                        ? UniCodes.orangeperformance2
+                                        : UniCodes.gray2)
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              UserPreferences().token = "";
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', ((route) => false));
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "   | Salir ",
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: UniCodes.cielperformance),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Icon(Icons.exit_to_app,
+                                    color: UniCodes.cielperformance)
                               ],
                             )),
                       ],

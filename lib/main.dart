@@ -1,10 +1,12 @@
 import 'package:admin_ambient/data/datasource/analytics_datasource.dart';
 import 'package:admin_ambient/data/datasource/autenticate_datasource.dart';
+import 'package:admin_ambient/data/datasource/notes_datasource.dart';
 import 'package:admin_ambient/data/datasource/podcast_datasource.dart';
 import 'package:admin_ambient/data/datasource/search_datasource.dart';
 import 'package:admin_ambient/data/datasource/user_datasource.dart';
 import 'package:admin_ambient/domain/logic/analytics/analytics_cubit.dart';
 import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
+import 'package:admin_ambient/domain/logic/notes/notes_cubit.dart';
 import 'package:admin_ambient/domain/logic/notificartion/notificacion_cubit.dart';
 import 'package:admin_ambient/domain/logic/podcast/podcast_cubit.dart';
 import 'package:admin_ambient/domain/logic/search/search_cubit.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
     final searchDatasource = SearchDatasource();
     final userDataSource = UserDataSource();
     final podcastDataSource = PodCastDataSource();
+    final notesDataSource = NotesDataSource();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => SignInAndUpCubit(autenticationDataSource)),
@@ -55,7 +58,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => GeneralCubit(userDataSource)),
         BlocProvider(
             create: (_) => NotificacionCubit(userDataSource: userDataSource)),
-            BlocProvider(create: (_) => PodcastCubit(podcastDataSource)),
+        BlocProvider(create: (_) => PodcastCubit(podcastDataSource)),
+        BlocProvider(
+            create: (_) => NotesCubit(notesDataSource, podcastDataSource)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

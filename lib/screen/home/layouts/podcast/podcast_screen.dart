@@ -391,7 +391,7 @@ class _UploadPodCastCardState extends State<UploadPodCastCard> {
                       fillColor: UniCodes.green,
                     ),
                     validator: (String? value) =>
-                        value!.isEmpty ? 'Ingresa tu correo' : null,
+                        value!.isEmpty ? 'Nombre del podcast' : null,
                   ),
                 ),
                 const SizedBox(
