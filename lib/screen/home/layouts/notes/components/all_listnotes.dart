@@ -10,9 +10,11 @@ class AllListNotes extends StatelessWidget {
   const AllListNotes({
     Key? key,
     required this.responsive,
+    required this.list
   }) : super(key: key);
 
   final Responsive responsive;
+  final List<NotesModel> list;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,6 @@ class AllListNotes extends StatelessWidget {
       height: responsive.height,
       width: 300,
       child: Builder(builder: (context) {
-        List<NotesModel> list = context.select<NotesCubit, List<NotesModel>>(
-            (value) => value.state.notelist);
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(

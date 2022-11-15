@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({super.key});
@@ -34,6 +35,8 @@ class _NoteScreenState extends State<NoteScreen> {
     }, child: Builder(builder: (context) {
       NotesStateEnum state = context.select<NotesCubit, NotesStateEnum>(
           (value) => value.state.notesStateEnum);
+      List<NotesModel> list = context.select<NotesCubit, List<NotesModel>>(
+          (value) => value.state.notelist);
       return SizedBox(
           height: responsive.height,
           width: responsive.width,
@@ -46,14 +49,26 @@ class _NoteScreenState extends State<NoteScreen> {
               Row(
                 children: [
                   if (state == NotesStateEnum.success)
-                    AllListNotes(responsive: responsive),
+                    AllListNotes(
+                      responsive: responsive,
+                      list: list,
+                    ),
                   if (state == NotesStateEnum.loading)
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator(
-                        color: UniCodes.orangeperformance2,
-                        backgroundColor: UniCodes.whiteperformance,
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey.shade400,
+                      highlightColor: Colors.grey.shade100,
+                      child: AllListNotes(
+                        responsive: responsive,
+                        list: List.generate(
+                            4,
+                            (index) => NotesModel(
+                                creator: "",
+                                id: "",
+                                description: "",
+                                img: "",
+                                name: "",
+                                episodes: [],
+                                time: "")),
                       ),
                     ),
                   if (responsive.width > 660)
