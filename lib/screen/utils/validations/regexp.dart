@@ -4,8 +4,8 @@ class Validators {
   final validarEmail =
       StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
     Pattern pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$';
-    RegExp regExp =  RegExp(pattern as String);
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$';
+    RegExp regExp = RegExp(pattern as String);
 
     if (regExp.hasMatch(email)) {
       sink.add(email);
@@ -18,7 +18,7 @@ class Validators {
       handleData: (password, sink) {
     Pattern pattern =
         r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&<>+])[A-Za-z\d@$!%*#?&<>+]{8,}$";
-    RegExp regExp =  RegExp(pattern as String);
+    RegExp regExp = RegExp(pattern as String);
 
     if (regExp.hasMatch(password)) {
       sink.add(password);
@@ -28,29 +28,38 @@ class Validators {
     }
   });
 
-  final validarletras = StreamTransformer<String, String>.fromHandlers(
-      handleData: (text, sink) {
+  final validarletras =
+      StreamTransformer<String, String>.fromHandlers(handleData: (text, sink) {
     Pattern pattern =
-       r'^[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ. ]+$';
-    RegExp regExp =  RegExp(pattern as String);
+        r'^[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ. ]+$';
+    RegExp regExp = RegExp(pattern as String);
     if (regExp.hasMatch(text)) {
       sink.add(text);
     } else {
-      sink.addError(
-          'Caracter no valido');
+      sink.addError('Caracter no valido');
     }
   });
-  
-  final validarURL = StreamTransformer<String, String>.fromHandlers(
-      handleData: (text, sink) {
+
+  final validarURL =
+      StreamTransformer<String, String>.fromHandlers(handleData: (text, sink) {
     Pattern pattern =
-       r'^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$';
-    RegExp regExp =  RegExp(pattern as String);
+        r'^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$';
+    RegExp regExp = RegExp(pattern as String);
     if (regExp.hasMatch(text)) {
       sink.add(text);
     } else {
-      sink.addError(
-          'Url no valida');
+      sink.addError('Url no valida');
+    }
+  });
+
+  final validarNumber =
+      StreamTransformer<String, String>.fromHandlers(handleData: (text, sink) {
+    Pattern pattern = r'^[0-9]$';
+    RegExp regExp = RegExp(pattern as String);
+    if (regExp.hasMatch(text)) {
+      sink.add(text);
+    } else {
+      sink.addError('Ingresa un numero valido');
     }
   });
 }

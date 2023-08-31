@@ -1,6 +1,18 @@
+import 'package:admin_ambient/data/datasource/analytics_datasource.dart';
 import 'package:admin_ambient/data/datasource/autenticate_datasource.dart';
+import 'package:admin_ambient/data/datasource/notes_datasource.dart';
+import 'package:admin_ambient/data/datasource/podcast_datasource.dart';
+import 'package:admin_ambient/data/datasource/search_datasource.dart';
+import 'package:admin_ambient/data/datasource/user_datasource.dart';
+import 'package:admin_ambient/domain/logic/analytics/analytics_cubit.dart';
+import 'package:admin_ambient/domain/logic/general/general_cubit.dart';
+import 'package:admin_ambient/domain/logic/notes/notes_cubit.dart';
+import 'package:admin_ambient/domain/logic/notificartion/notificacion_cubit.dart';
+import 'package:admin_ambient/domain/logic/podcast/podcast_cubit.dart';
+import 'package:admin_ambient/domain/logic/search/search_cubit.dart';
 import 'package:admin_ambient/domain/logic/signIn_signUp/sign_in_and_sign_up_cubit.dart';
 import 'package:admin_ambient/domain/logic/splash/splash_cubit.dart';
+import 'package:admin_ambient/domain/logic/user/user_cubit.dart';
 import 'package:admin_ambient/domain/services/prefs_services.dart';
 import 'package:admin_ambient/screen/utils/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,10 +43,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final autenticationDataSource = AutenticationDataSource();
+    final analyticsDataSource = AnalyticsDataSource();
+    final searchDatasource = SearchDatasource();
+    final userDataSource = UserDataSource();
+    final podcastDataSource = PodCastDataSource();
+    final notesDataSource = NotesDataSource();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => SignInAndUpCubit(autenticationDataSource)),
         BlocProvider(create: (_) => SplashCubit(autenticationDataSource)),
+        BlocProvider(create: (_) => AnalyticsCubit(analyticsDataSource)),
+        BlocProvider(create: (_) => SearchCubit(searchDatasource)),
+        BlocProvider(create: (_) => UserCubit(userDataSource)),
+        BlocProvider(create: (_) => GeneralCubit(userDataSource)),
+        BlocProvider(
+            create: (_) => NotificacionCubit(userDataSource: userDataSource)),
+        BlocProvider(create: (_) => PodcastCubit(podcastDataSource)),
+        BlocProvider(
+            create: (_) => NotesCubit(notesDataSource, podcastDataSource)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
